@@ -18,7 +18,7 @@ if nargin==5
 end
 
 if(in1_col ~= 1)
-  error("This program doesn't yet know how to fix a state without pressure as the first input to the \"fix_state\" script");
+  error("This program doesn't yet know how to fix a state without pressure as the first input to the ""fix_state"" script");
 end
 
 in1_ind = find(sat_table(:,in1_col) == in1);
