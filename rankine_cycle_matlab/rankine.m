@@ -6,25 +6,28 @@ clear;
 clc;
 close all;
 
+%% Define the tables
+fluid = input('Enter the working fluid, 1 for water, 2 for R134, 3 for ideal gas:  ');
+%fluid = 1;
 tic;
-
-%fluid = input('Enter the working fluid, 1 for water, 2 for R134, 3 for ideal gas:  ');
-fluid = 1;
 fix_state([], [], [], [], fluid); % Identify the type of the fluid to load its tables
 
-%P_high = input("Enter the pressure of the fluid entering the turbine in MPa:  ");
-%T_high = input("Enter the temperature of the fluid entering the turbine in (deg C):  ");
-%P_low = input("Enter the pressure of the fluid entering the condenser in MPa:  ");
-%e_turbine = input("Enter the efficiency of the turbine")
-%e_pump = input("Enter the efficiency of the pump")
-% m_dot = input("Enter the rate of mass flow (if you want values specific enter 1) : ");
+%% Inputs
+P_high = input("Enter the pressure of the fluid entering the turbine in MPa:  ");
+T_high = input("Enter the temperature of the fluid entering the turbine in (deg C):  ");
+P_low = input("Enter the pressure of the fluid entering the condenser in MPa:  ");
+e_turbine = input("Enter the efficiency of the turbine: ");
+e_pump = input("Enter the efficiency of the pump: ");
+ m_dot = input("Enter the rate of mass flow (if you want values specific enter 1) : ");
 
-P_high = 5.15;
-T_high = 550.15;
-P_low = 10.1e-3;
-e_turbine = 0.85;
-e_pump = 0.95;
-m_dot = 1;
+%P_high = 5;
+%T_high = 400;
+%P_low = 10.1e-3;
+%e_turbine = 0.8;
+%e_pump = 0.85;
+%m_dot = 1;
+
+tic;
 
 state_1 = fix_state(1,P_high,2,T_high)
 
@@ -54,5 +57,5 @@ efficiency = w/qin*100.0;
 fprintf("Work net out = %f kJ/kg\n",w);
 fprintf("Heat energy required = %f kJ/kg\n",qin);
 fprintf("Efficiency of the cycle = %f%%\n",efficiency);
-toc;
+t += toc
 

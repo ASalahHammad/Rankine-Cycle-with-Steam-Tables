@@ -9,16 +9,27 @@ if nargin==5
     table_3 = importdata('steam_tables/table_3.csv'); % superheated and compressed table
     table_3 = table_3.data(:,1:6);
   elseif (fluid == 2) % R134
-    fprintf('loading R134 tables...');
-    sat_table = importdata('R134_tables/sat_table.csv'); % saturation table
-    sat_table = sat_table.data;
-    error("The superheated R134 tables are not ready...");
+    fprintf('loading R134 tables...\n');
+    error("Sorry, the R134 tables haven't yet been implemented");
+    %    sat_table = importdata('R134_tables/sat_table.csv'); % saturation table
+%    sat_table = sat_table.data;
+  elseif (fluid == 3) % Perfect Gas
+    fprintf("Sorry, the code for ideal gas hasn't yet been implemented\n");
   end
   return;
 end
 
 if(in1_col ~= 1)
-  error("This program doesn't yet know how to fix a state without pressure as the first input to the ""fix_state"" script");
+  if(in2_col ~= 1)
+    error("This program doesn't yet know how to fix a state without pressure as the first input to the ""fix_state"" script");
+  else % switch between inputs to make in1 pressure.
+    z = in1;
+    z_col = in1_col;
+    in1 = in2;
+    in1_col = in2_col;
+    in2 = z;
+    in2_col = z_col;
+  end
 end
 
 in1_ind = find(sat_table(:,in1_col) == in1);
@@ -60,7 +71,7 @@ in1_ind = find(table_3(:,in1_col) == in1);
 if(in1_ind) % in1 found
   in2_ind = find(table_3(in1_ind,in2_col) == in2);
   if(in2_ind) % in2 found
-    fixed_state = table_3(in1_ind+in2_ind-1,:);
+    fixed_state = table_3(in1_ind(1) + in2_ind - 1, :);
   else % in2 not found
     for i = in1_ind'
       if(table_3(i,in2_col)>in2)
