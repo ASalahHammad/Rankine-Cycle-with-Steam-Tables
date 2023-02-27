@@ -57,5 +57,5 @@ efficiency = w/qin*100.0;
 fprintf("Work net out = %f kJ/kg\n",w);
 fprintf("Heat energy required = %f kJ/kg\n",qin);
 fprintf("Efficiency of the cycle = %f%%\n",efficiency);
-t += toc
+toc
 
