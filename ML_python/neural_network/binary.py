@@ -1,13 +1,12 @@
-import neural_network
 import numpy as np
-import pandas as pd
 import math
-import matplotlib.pyplot as plt
-from sklearn.metrics import r2_score, mean_absolute_error
+
+# ============== This script changes floating binary numbers into floating decimals and vice versa ==============
 
 # prepare the output
 def find_ans(ans):
     ans = ans.reshape(32)
+    print(ans)
     string = []
     for i in ans:
         if i>0.5:
@@ -53,39 +52,11 @@ def vectorize(y):
     e[16:] = binary[1]
     e = e.reshape(-1, 1)
     return e
+    
+a = 1
 
-# read the steam tables
-def load_data():
-    sat_table = np.array(pd.read_csv("../steam_tables/sat_table.csv").values.tolist())
-    sat_table = sat_table.transpose()
-    # table_3 = np.array(pd.read_csv("../steam_tables/table_3.csv").values.tolist())
-    # table_3 = table_3.transpose()
-    training_data = (sat_table[0], sat_table[1])
-    T = [vectorize(x) for x in training_data[1]] # Temperature
-    inputs = [np.reshape(x, (32, 1)) for x in T]
-    P = [vectorize(y) for y in training_data[0]] # Pressure
-    train = list(zip(inputs, P))
-    return train, sat_table
+b = vectorize(a)
+print("b =", b)
+ans = find_ans(b)
 
-
-ALL_DATA = load_data()
-train = ALL_DATA[0]
-sat_table = ALL_DATA[1]
-
-# Initialise the network
-net = neural_network.Network([32, 20, 20, 32])
-
-# Train the network
-net.SGD(training_data=train, epochs=50, mini_batch_size=1, eta=0.5, test_data=None) # epochs 50-100
-
-# Test and Plot
-x_plot = np.arange(1, 380, 0.5)
-y_plot = []
-for i in x_plot:
-    y_plot.append(find_ans(net.feedforward(vectorize(i))))
-
-plt.scatter(x_plot, y_plot, marker='*', color='g')
-plt.scatter(sat_table[1], sat_table[0], color='r')
-plt.xlabel("T (C)")
-plt.ylabel("P (MPa)")
-plt.show()
+print(ans)

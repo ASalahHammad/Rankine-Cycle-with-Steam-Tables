@@ -11,7 +11,7 @@ if nargin==5
   elseif (fluid == 2) % R134
     fprintf('loading R134 tables...\n');
     error("Sorry, the R134 tables haven't yet been implemented");
-    %    sat_table = importdata('R134_tables/sat_table.csv'); % saturation table
+%    sat_table = importdata('R134_tables/sat_table.csv'); % saturation table
 %    sat_table = sat_table.data;
   elseif (fluid == 3) % Perfect Gas
     fprintf("Sorry, the code for ideal gas hasn't yet been implemented\n");
@@ -36,7 +36,7 @@ in1_ind = find(sat_table(:,in1_col) == in1);
 if(in1_ind)
   saturation_1 = sat_table(in1_ind,:);
 else
-  for i = 1:length(sat_table)
+  for i = 1:length(sat_table) %% find the row with value just greater than in1 to start interpolation
     if(sat_table(i,in1_col)>in1)
       if(i == 1)
         error("Can't interpolate because number is too small");
@@ -48,16 +48,16 @@ else
 end
 
 if (in2_col == 2) % Temperature
-  if (in2 == saturation_1(2))
+  if(exist('saturation_1') & saturation_1(2))
     error("Can't fix the state because the two inputs are dependent");
   end
-elseif (in2_col == 7) % x
+elseif(in2_col == 7) % x
   fixed_state = saturation_1(1:2);
   fixed_state(3:6) = saturation_1(3:2:10) + in2*(saturation_1((3:2:10)+1) - saturation_1(3:2:10));
   return;
 else
-  if (in2_col == 3), col=3; elseif(in2_col == 4), col=5; elseif(in2_col == 5), col=7; elseif(in2_col == 6), col=9; end;
-  if(saturation_1(col)<=in2 && saturation_1(col+1)>=in2) % if 2nd input lies in the saturation region corresponding to in1
+  col = in2_col*2 - 3; % because we actually have two columns for each property in the tables, one for sat liquid and one for sat vapour
+  if(exist('saturation_1') & (saturation_1(col)<=in2 && saturation_1(col+1)>=in2)) % if 2nd input lies in the saturation region corresponding to in1
    x = (in2-saturation_1(col))/(saturation_1(col+1)-saturation_1(col))
    fixed_state = saturation_1(1:2);
    fixed_state(3:6) = saturation_1(3:2:10) + x*(saturation_1((3:2:10)+1)-saturation_1(3:2:10));

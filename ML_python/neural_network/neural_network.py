@@ -55,7 +55,7 @@ class Network(object):
             if test_data:
                 print("Epoch {0}: {1} / {2}".format(j+1, self.evaluate(test_data), n_test)) # python 3
             else:
-                print("Epoch {0} complete".format(j)) # python 3
+                print("Epoch {0} complete".format(j+1)) # python 3
             # np.save('w.npy',self.weights,allow_pickle=True)
             # np.save('b.npy',self.biases,allow_pickle=True)
 
@@ -85,8 +85,8 @@ class Network(object):
         activations = [x] # list to store all the activations, layer by layer
         zs = [] # list to store all the z vectors, layer by layer
         for b, w in zip(self.biases, self.weights):
-            print("w =", w)
-            print("activation =", activation)
+            # print("w =", w)
+            # print("activation =", activation)
             z = np.dot(w, activation)+b
             zs.append(z)
             activation = sigmoid(z)

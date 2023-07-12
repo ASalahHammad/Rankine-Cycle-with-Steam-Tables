@@ -7,25 +7,25 @@ clc;
 close all;
 
 %% Define the tables
-fluid = input('Enter the working fluid, 1 for water, 2 for R134, 3 for ideal gas:  ');
-%fluid = 1;
+%fluid = input('Enter the working fluid, 1 for water, 2 for R134, 3 for ideal gas:  ');
+fluid = 1;
 tic;
 fix_state([], [], [], [], fluid); % Identify the type of the fluid to load its tables
 
 %% Inputs
-P_high = input("Enter the pressure of the fluid entering the turbine in MPa:  ");
-T_high = input("Enter the temperature of the fluid entering the turbine in (deg C):  ");
-P_low = input("Enter the pressure of the fluid entering the condenser in MPa:  ");
-e_turbine = input("Enter the efficiency of the turbine: ");
-e_pump = input("Enter the efficiency of the pump: ");
- m_dot = input("Enter the rate of mass flow (if you want values specific enter 1) : ");
+%P_high = input("Enter the pressure of the fluid entering the turbine in MPa:  ");
+%T_high = input("Enter the temperature of the fluid entering the turbine in (deg C):  ");
+%P_low = input("Enter the pressure of the fluid entering the condenser in MPa:  ");
+%e_turbine = input("Enter the efficiency of the turbine: ");
+%e_pump = input("Enter the efficiency of the pump: ");
+% m_dot = input("Enter the rate of mass flow (if you want values specific enter 1) : ");
 
-%P_high = 5;
-%T_high = 400;
-%P_low = 10.1e-3;
-%e_turbine = 0.8;
-%e_pump = 0.85;
-%m_dot = 1;
+P_high = 1000;
+T_high = 500;
+P_low = 20e-3;
+e_turbine = 1;
+e_pump = 1;
+m_dot = 1;
 
 tic;
 
